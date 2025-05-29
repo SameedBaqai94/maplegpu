@@ -1,5 +1,6 @@
 import { PrismaClient } from "../generated/prisma";
 import { UsersCreateDto } from "../models/Users";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
@@ -46,7 +47,12 @@ export const signInUsersService = async (user: UsersCreateDto): Promise<Response
         if (!await bcrypt.compare(user.passwordHashed, findUser.passwordHashed)) {
             return { response: "User not verified" }
         }
-        return { response: "User verified" }
+        const token = jwt.sign(
+            { id: findUser.id, email: findUser.email, name: findUser.name },
+            process.env.JWT_SECRET || "your_jwt_secret",
+            { expiresIn: "1h" }
+        );
+        return { response: token }
     } catch (e) {
         return { error: (e as Error).message }
     }

@@ -4,7 +4,7 @@ FROM node:23-alpine3.21
 WORKDIR /app
 
 # Copy package.json and package-lock.json
-COPY .package*.json ./
+COPY package*.json ./
 COPY prisma ./prisma
 # Install dependencies
 RUN npm install
@@ -16,4 +16,4 @@ COPY . .
 EXPOSE 3000
 
 # Start the application
-CMD ["sh", "-e", "npx prisma generate && npm run dev"]
+CMD ["sh", "-c", "npx prisma generate && npm run dev"]

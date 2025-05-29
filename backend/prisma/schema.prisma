@@ -21,4 +21,28 @@ model Users{
   passwordHashed String @map("password_hashed")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
+
+  lists List[] @relation("UserLists")
+}
+model GPU{
+  id Int @id @default(autoincrement())
+  name String
+  manufacturer String
+  lists        List[] @relation("GpuLists")
+}
+model List{
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  price Int
+  condition String
+  image String
+  sellerId Int @map("seller_id")
+  gpuId Int @map("gpu_id")
+  status String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt() @map("updated_at")
+
+  seller  Users  @relation("UserLists", fields: [sellerId], references: [id])
+  gpu  GPU  @relation("GpuLists", fields: [gpuId], references: [id])
 }

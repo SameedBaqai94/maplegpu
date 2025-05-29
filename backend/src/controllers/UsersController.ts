@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { UsersCreateDto } from "../models/Users";
-import { createUsersService } from "../services/UsersService";
+import { createUsersService, signInUsersService } from "../services/UsersService";
 
 export const createUsersController = async (req: Request<{}, {}, UsersCreateDto>, res: Response): Promise<any> => {
     const { name, email, passwordHashed } = { ...req.body };
@@ -25,7 +25,7 @@ export const signInUserController = async (req: Request<{}, {}, UsersCreateDto>,
         return res.status(400).json({ error: "One of the fields is empty" })
     }
 
-    const signInUser = await createUsersService({ email, passwordHashed });
+    const signInUser = await signInUsersService({ email, passwordHashed });
 
     if (signInUser.response) {
         return res.status(200).json({ response: signInUser.response })
