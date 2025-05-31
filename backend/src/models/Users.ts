@@ -1,3 +1,5 @@
+import { ListReadDto } from "./List";
+
 interface Users {
     id: number;
     name: string;
@@ -18,55 +20,5 @@ export interface UsersCreateDto {
 export interface UsersReadDto {
     name: string;
     email: string;
-}
-
-export interface GPU {
-    id: number;
-    name: string;
-    manufacturer: string;
     lists: ListReadDto[];
-}
-
-export interface GPUWriteDto {
-    name: string;
-    manufacturer: string;
-}
-
-export interface GPUReadDto {
-    name: string;
-    manufacturer: string;
-}
-
-export interface List {
-    id: number;
-    title: string;
-    description: string;
-    price: number;
-    condition: string;
-    image: string;
-    sellerId: number;
-    gpuId: number;
-    status: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-export interface ListWriteDto {
-    title: string;
-    description: string;
-    price: number;
-    condition: string;
-    image: string;
-    sellerId: number;
-    gpuId: number;
-    status: string;
-}
-
-export interface ListReadDto {
-    title: string;
-    description: string;
-    price: number;
-    condition: string;
-    image: string;
-    status: string;
 }
