@@ -8,7 +8,7 @@ MapleGPU is a full-stack web application that simplifies the process of finding 
 
 ## 📸 Screenshots
 
-> _(Coming soon)_ Add UI screenshots or screen recordings to show off the interface and features.
+> _(Coming soon)
 
 ---
 
@@ -29,7 +29,7 @@ MapleGPU is a full-stack web application that simplifies the process of finding 
    ```
 
 4. **Access the app**
-   - Backend API: `http://localhost:5000`
-   - Frontend (if added to Compose): `http://localhost:3000`
+   - Backend API: `http://localhost:3000`
+   - Frontend (if added to Compose): `http://localhost:8000`
 
 
