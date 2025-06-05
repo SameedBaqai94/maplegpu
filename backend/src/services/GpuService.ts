@@ -16,7 +16,8 @@ export const createGpuService = async (gpuData: GPUWriteDto): Promise<ResponseIn
                 manufacturer: gpuData.manufacturer
             }
         })
-        return { response: "GPU Created" }
+
+        return { response: newGpu }
     } catch (e) {
         return { error: (e as Error).message }
     }
