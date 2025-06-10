@@ -1,4 +1,4 @@
-import { ListReadDto } from "./List";
+import { GpuReadDto } from "./Gpu";
 
 interface Users {
     id: number;
@@ -7,8 +7,7 @@ interface Users {
     passwordHashed: string;
     createdAt: Date;
     updatedAt: Date;
-
-    lists: ListReadDto[];
+    listings?: GpuReadDto[];
 }
 
 export interface UsersCreateDto {
@@ -20,5 +19,5 @@ export interface UsersCreateDto {
 export interface UsersReadDto {
     name: string;
     email: string;
-    lists: ListReadDto[];
+    listings?: GpuReadDto[];
 }

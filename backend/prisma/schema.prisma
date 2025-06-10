@@ -22,27 +22,19 @@ model Users{
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @default(now()) @map("updated_at")
 
-  lists List[] @relation("UserLists")
+  listings GPU[]
 }
 model GPU{
-  id Int @id @default(autoincrement())
-  name String
-  manufacturer String
-  lists        List[] @relation("GpuLists")
-}
-model List{
-  id Int @id @default(autoincrement())
-  title String
-  description String
-  price Int
-  condition String
-  image String
-  sellerId Int @map("seller_id")
-  gpuId Int @map("gpu_id")
-  status String
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt() @map("updated_at")
-
-  seller  Users  @relation("UserLists", fields: [sellerId], references: [id])
-  gpu  GPU  @relation("GpuLists", fields: [gpuId], references: [id])
+  id          String   @id @default(cuid())
+  title       String 
+  price       Int 
+  condition   String
+  description String?
+  imageUrls   String[]
+  city        String
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  
+  sellerId    Int
+  seller      Users     @relation(fields: [sellerId], references: [id])
 }
