@@ -8,6 +8,7 @@ export interface GPU {
     city: string;
     isActive?: boolean;
     createdAt?: Date;
+    sellerId: number;
 }
 
 export interface GpuReadDto {
@@ -26,4 +27,5 @@ export interface GpuWriteDto {
     description?: string;
     imageUrls: string[];
     city: string;
+    sellerId: number;
 }
