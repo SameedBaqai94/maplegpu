@@ -1,11 +1,21 @@
 import { Request, response, Response } from "express";
 import { GpuWriteDto } from "../models/Gpu";
-import { createGPUService } from "../services/GpuService";
+import { createGPUService, getAllGPUsService, getGPUsBySellerIdService } from "../services/GpuService";
+import { CustomRequest } from "../middleware/jwtUtil";
+import { JwtPayload } from "jsonwebtoken";
+import { UsersCreateDto } from "../models/Users";
 
-
+// Controller to handle GPU listing creation. Extracts JWT payload for seller ID, validates request body, 
+// then calls the service to create a new GPU listing. Returns appropriate success or error responses.
 export const createGpuController = async (req: Request<{}, {}, GpuWriteDto>, res: Response): Promise<any> => {
     try {
-        const { title, price, condition, description, imageUrls, city, sellerId } = { ...req.body };
+        // Cast request to CustomRequest to access JWT payload
+        const customReq = req as CustomRequest;
+        const jwtPayload = customReq.response;
+
+        // Now you can access JWT payload data
+        console.log('JWT Payload:', jwtPayload);
+        const { title, price, condition, description, imageUrls, city, province } = { ...req.body };
         if (
             !title ||
             title.trim() === "" ||
@@ -13,11 +23,11 @@ export const createGpuController = async (req: Request<{}, {}, GpuWriteDto>, res
             condition === undefined ||
             !imageUrls ||
             !city ||
-            sellerId === undefined
+            !province
         ) {
             return res.status(400).json({ error: "Missing required fields" });
         }
-        const newGpuService = await createGPUService({ title, price, condition, imageUrls, city, sellerId });
+        const newGpuService = await createGPUService({ title, price, condition, imageUrls, city, province, sellerId: (jwtPayload as JwtPayload).id });
 
         if (newGpuService.error) {
             return res.status(400).json({ error: newGpuService.error });
@@ -27,4 +37,58 @@ export const createGpuController = async (req: Request<{}, {}, GpuWriteDto>, res
     } catch (error) {
         res.status(500).json({ error: "Failed to create GPU listing" });
     }
+};
+
+// Get all GPUs Controller
+export const getAllGpusController = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const gpus = await getAllGPUsService();
+        res.status(200).json({ response: gpus });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch GPU listings" });
+    }
+};
+
+// Get GPU by ID Controller
+export const getGpuBySellerIdController = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const customReq = req as CustomRequest;
+        const jwtPayload = (customReq.response as JwtPayload);
+        const gpus = await getGPUsBySellerIdService(jwtPayload.id);
+        if (gpus.error) {
+            return res.status(404).json({ error: gpus.error ? gpus.error : "GPUs not found" });
+        }
+        res.status(200).json({ response: gpus.response });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to fetch GPUs" });
+    }
+};
+
+// Update GPU Controller
+export const updateGpuController = async (req: Request, res: Response) => {
+    // try {
+    //     const { id } = req.params;
+    //     const updateData: GpuWriteDto = req.body;
+    //     const updatedGpu = await updateGPUService(id, updateData);
+    //     if (!updatedGpu) {
+    //         return res.status(404).json({ error: "GPU not found" });
+    //     }
+    //     res.status(200).json({ response: updatedGpu });
+    // } catch (error) {
+    //     res.status(500).json({ error: "Failed to update GPU" });
+    // }
+};
+
+// Delete GPU Controller
+export const deleteGpuController = async (req: Request, res: Response) => {
+    // try {
+    //     const { id } = req.params;
+    //     const deleted = await deleteGPUService(id);
+    //     if (!deleted) {
+    //         return res.status(404).json({ error: "GPU not found" });
+    //     }
+    //     res.status(200).json({ response: "GPU deleted successfully" });
+    // } catch (error) {
+    //     res.status(500).json({ error: "Failed to delete GPU" });
+    // }
 };

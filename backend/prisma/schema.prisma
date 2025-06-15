@@ -24,14 +24,16 @@ model Users{
 
   listings GPU[]
 }
+
 model GPU{
-  id          String   @id @default(cuid())
+  id          Int   @id @default(autoincrement())
   title       String 
   price       Int 
   condition   String
   description String?
   imageUrls   String[]
   city        String
+  province    String
   isActive    Boolean  @default(true)
   createdAt   DateTime @default(now())
   

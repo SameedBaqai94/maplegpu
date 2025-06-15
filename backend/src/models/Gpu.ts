@@ -1,5 +1,5 @@
 export interface GPU {
-    id: string;
+    id: number;
     title: string;
     price: number;
     condition: string;
@@ -18,6 +18,7 @@ export interface GpuReadDto {
     description?: string;
     imageUrls: string[];
     city: string;
+    province: string;
 }
 
 export interface GpuWriteDto {
@@ -27,5 +28,6 @@ export interface GpuWriteDto {
     description?: string;
     imageUrls: string[];
     city: string;
-    sellerId: number;
+    province: string;
+    sellerId?: number;
 }
