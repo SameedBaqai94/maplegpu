@@ -101,38 +101,38 @@ export const getAllGPUsBy = async (): Promise<ResponseInterface> => {
     }
 }
 
-// export const getGPUsBySellerIdService = async (userId: number): Promise<ResponseInterface> => {
-//     try {
-//         const getGpus = await prisma.users.findFirst({
-//             where: {
-//                 id: userId
-//             },
-//             include: {
-//                 listings: true
-//             }
-//         });
+export const getGPUsBySellerIdService = async (userId: number): Promise<ResponseInterface> => {
+    try {
+        const getGpus = await prisma.users.findFirst({
+            where: {
+                id: userId
+            },
+            include: {
+                listings: true
+            }
+        });
 
-//         if (getGpus) {
-//             const gpus: GpuReadDto[] = getGpus.listings.map(gpu => ({
-//                 title: gpu.title,
-//                 price: gpu.price,
-//                 condition: gpu.condition,
-//                 description: gpu.description ? gpu.description : undefined,
-//                 imageUrls: gpu.imageUrls,
-//                 city: gpu.city,
-//                 province: gpu.province
-//             }));
-//             return { response: gpus }
-//         }
-//         return { error: "You dont have any GPU listed" }
-//     }
+        if (getGpus) {
+            const gpus: GpuReadDto[] = getGpus.listings.map(gpu => ({
+                title: gpu.title,
+                price: gpu.price,
+                condition: gpu.condition,
+                description: gpu.description ? gpu.description : undefined,
+                imageUrls: gpu.imageUrls,
+                city: gpu.city,
+                province: gpu.province
+            }));
+            return { response: gpus }
+        }
+        return { error: "You dont have any GPU listed" }
+    }
 
-//     catch (e) {
-//         return { error: (e as Error).message }
-//     }
-// }
+    catch (e) {
+        return { error: (e as Error).message }
+    }
+}
 
-export const updateGPUby = async (gpuId: number, userId: number, gpu: GpuWriteDto): Promise<ResponseInterface> => {
+export const updateGPUService = async (gpuId: number, userId: number, gpu: GpuWriteDto): Promise<ResponseInterface> => {
     try {
         const getGpus = await prisma.gPU.findFirst({
             where: {
