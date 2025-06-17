@@ -37,4 +37,19 @@
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb2pvQGdtYWlsLmNvbSIsIm5hbWUiOiJHb2pvIiwiaWF0IjoxNzQ5OTQ2NjM3LCJleHAiOjE3NDk5NTAyMzd9.Zzv1A3b_WLzX6q7qFu2fDJXIDfSSPf1tzPXQHuIReqg
 
 GET http://localhost:3000/api/gpu/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb2pvQGdtYWlsLmNvbSIsIm5hbWUiOiJHb2pvIiwiaWF0IjoxNzQ5OTQ2NjM3LCJleHAiOjE3NDk5NTAyMzd9.Zzv1A3b_WLzX6q7qFu2fDJXIDfSSPf1tzPXQHuIReqg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb2pvQGdtYWlsLmNvbSIsIm5hbWUiOiJHb2pvIiwiaWF0IjoxNzUwMDQxNjgyLCJleHAiOjE3NTAwNDUyODJ9.V9qKQMue3U3vmtw4AE2qub43eYYzXBYroksCWQTBKS8
+
+# PUT http://localhost:3000/api/gpu/update/1
+# Content-Type: application/json
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJnb2pvQGdtYWlsLmNvbSIsIm5hbWUiOiJHb2pvIiwiaWF0IjoxNzUwMDQxNjgyLCJleHAiOjE3NTAwNDUyODJ9.V9qKQMue3U3vmtw4AE2qub43eYYzXBYroksCWQTBKS8
+
+# {
+#     "title":"NVIDIA RTX 3070",
+#     "price":300,
+#     "condition":"Used but new",
+#     "description":"Used",
+#     "imageUrls":["testing"],
+#     "city":"Toronto",
+#     "province":"ON",
+#     "sellerId":1
+# }
