@@ -157,3 +157,30 @@ export const updateGPUService = async (gpuId: number, userId: number, gpu: GpuWr
         return { error: (e as Error).message }
     }
 }
+
+export const removeGPUService = async (gpuId: number, userId: number): Promise<ResponseInterface> => {
+    try {
+        const getGpus = await prisma.gPU.findFirst({
+            where: {
+                id: gpuId,
+                sellerId: userId
+            }
+        });
+        if (getGpus) {
+            const deleteGPU = await prisma.gPU.delete(
+                {
+                    where: {
+                        id: getGpus.id
+                    }
+                }
+            )
+            return { response: "GPU Deleted" }
+        }
+
+        return { response: "You dont have any GPU listed" }
+    }
+
+    catch (e) {
+        return { error: (e as Error).message }
+    }
+}

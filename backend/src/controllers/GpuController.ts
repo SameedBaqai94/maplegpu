@@ -1,6 +1,6 @@
 import { Request, response, Response } from "express";
 import { GpuWriteDto } from "../models/Gpu";
-import { createGPUService, getAllGPUsService, getGPUsBySellerIdService, updateGPUService } from "../services/GpuService";
+import { createGPUService, getAllGPUsService, getGPUsBySellerIdService, removeGPUService, updateGPUService } from "../services/GpuService";
 import { CustomRequest } from "../middleware/jwtUtil";
 import { JwtPayload } from "jsonwebtoken";
 import { UsersCreateDto } from "../models/Users";
@@ -84,15 +84,18 @@ export const updateGpuController = async (req: Request<{ gpuId: string }, {}, Gp
 };
 
 // Delete GPU Controller
-export const deleteGpuController = async (req: Request, res: Response) => {
-    // try {
-    //     const { id } = req.params;
-    //     const deleted = await deleteGPUService(id);
-    //     if (!deleted) {
-    //         return res.status(404).json({ error: "GPU not found" });
-    //     }
-    //     res.status(200).json({ response: "GPU deleted successfully" });
-    // } catch (error) {
-    //     res.status(500).json({ error: "Failed to delete GPU" });
-    // }
+export const deleteGpuController = async (req: Request<{ gpuId: string }, {}, {}>, res: Response): Promise<any> => {
+    try {
+        const { gpuId } = req.params;
+
+        const customReq = req as unknown as CustomRequest;
+        const jwtPayload = customReq.response as JwtPayload;
+        const deleted = await removeGPUService(Number(gpuId), jwtPayload.id);
+        if (!deleted) {
+            return res.status(404).json({ error: "GPU not found" });
+        }
+        res.status(200).json({ response: "GPU deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to delete GPU" });
+    }
 };
