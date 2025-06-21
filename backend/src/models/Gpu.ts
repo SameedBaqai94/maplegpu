@@ -24,10 +24,15 @@ export interface GpuReadDto {
 export interface GpuWriteDto {
     title: string;
     price: number;
-    condition: string;
+    condition: Condition;
     description?: string;
     imageUrls: string[];
     city: string;
     province: string;
     sellerId?: number;
+}
+
+export enum Condition {
+    New = "new",
+    Used = "used"
 }

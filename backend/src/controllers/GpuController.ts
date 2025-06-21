@@ -1,9 +1,8 @@
 import { Request, response, Response } from "express";
-import { GpuWriteDto } from "../models/Gpu";
+import { Condition, GpuWriteDto } from "../models/Gpu";
 import { createGPUService, getAllGPUsService, getGPUsBySellerIdService, removeGPUService, updateGPUService } from "../services/GpuService";
 import { CustomRequest } from "../middleware/jwtUtil";
 import { JwtPayload } from "jsonwebtoken";
-import { UsersCreateDto } from "../models/Users";
 
 // Controller to handle GPU listing creation. Extracts JWT payload for seller ID, validates request body, 
 // then calls the service to create a new GPU listing. Returns appropriate success or error responses.
@@ -13,8 +12,6 @@ export const createGpuController = async (req: Request<{}, {}, GpuWriteDto>, res
         const customReq = req as CustomRequest;
         const jwtPayload = customReq.response;
 
-        // Now you can access JWT payload data
-        console.log('JWT Payload:', jwtPayload);
         const { title, price, condition, description, imageUrls, city, province } = { ...req.body };
         if (
             !title ||
@@ -27,6 +24,10 @@ export const createGpuController = async (req: Request<{}, {}, GpuWriteDto>, res
         ) {
             return res.status(400).json({ error: "Missing required fields" });
         }
+        if (!Object.values(Condition).includes(condition)) {
+            return res.status(400).json({ error: "Invalid condition. Must be 'new' or 'used'." });
+        }
+
         const newGpuService = await createGPUService({ title, price, condition, imageUrls, city, province, sellerId: (jwtPayload as JwtPayload).id });
 
         if (newGpuService.error) {
