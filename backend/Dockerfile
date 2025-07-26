@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Expose the port your app runs on
-EXPOSE 3000
+EXPOSE 8000
 
 # Start the application
 CMD ["sh", "-c", "npx prisma generate && npm run dev"]
