@@ -2,38 +2,21 @@ import { useState, type FormEvent } from "react"
 import ButtonComponent from "../../common/ButtonComponent";
 import InputComponent from "../../common/InputComponent";
 import { Box, Typography } from "@mui/material";
+import useAuth from "../../../hooks/useAuth";
 
 export default function LoginForm() {
-    const [email, setEmail] = useState<string>();
-    const [passwordHashed, setPasswordHashed] = useState<string>();
-    const [loading, setLoading] = useState<boolean>(false);
-
-    console.log(email, passwordHashed);
+    const [email, setEmail] = useState<string>("");
+    const [passwordHashed, setPasswordHashed] = useState<string>("");
+    const { signIn, loading, error } = useAuth();
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setLoading(true);
+        const response = await signIn(email, passwordHashed);
 
-        try {
-            const response = await fetch('http://localhost:8000/api/users/signin', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, passwordHashed }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                console.log('Sign in successful:', data);
-            } else {
-                console.error('Sign in failed:', data.message);
-            }
-        } catch (error) {
-            console.error('Network error:', error);
-        } finally {
-            setLoading(false);
+        if (response.success) {
+            console.log("Sign in successful:", response.data);
+        } else {
+            console.error("Sign in failed:", response.message);
         }
     }
     return (
@@ -70,8 +53,13 @@ export default function LoginForm() {
                 label="Password"
                 require={true}
             />
+            {error && (
+                <Typography variant="body2" color="error" sx={{ textAlign: "center" }}>
+                    {error}
+                </Typography>
+            )}
             <ButtonComponent type="submit" disabled={loading}>
-                {loading ? 'Signing In...' : 'Sign In'}
+                {loading ? "Signing In..." : "Sign In"}
             </ButtonComponent>
         </Box>
     )

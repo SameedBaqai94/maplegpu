@@ -40,18 +40,20 @@ const findUserService = async (email: string) => {
 
 export const signInUsersService = async (user: UsersCreateDto): Promise<ResponseInterface> => {
     try {
+        console.log(user.email, user.passwordHashed);
         const findUser = await findUserService(user.email);
         if (!findUser) {
             return { error: "User not found" }
         }
         if (!await bcrypt.compare(user.passwordHashed, findUser.passwordHashed)) {
-            return { response: "User not verified" }
+            return { error: "User not verified" }
         }
         const token = jwt.sign(
             { id: findUser.id, email: findUser.email, name: findUser.name },
             process.env.JWT_SECRET || "your_jwt_secret",
             { expiresIn: "1h" }
         );
+
         return { response: token }
     } catch (e) {
         return { error: (e as Error).message }
