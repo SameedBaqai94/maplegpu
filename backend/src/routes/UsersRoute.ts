@@ -6,6 +6,6 @@ const router = Router();
 
 router.post("/register", createUsersController);
 router.post("/signin", signInUserController);
-router.get("/current", verifyJwt, verifyJWTController);
+//router.get("/current", verifyJwt, verifyJWTController);
 
 export default router;

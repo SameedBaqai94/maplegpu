@@ -1,5 +1,5 @@
 import { Box, Container, Toolbar } from "@mui/material";
-import NavBarComponent from "../components/features/Navbar/NavBarComponent";
+import NavBarComponent from "../components/layout/Navbar/NavBarComponent";
 import { Outlet } from "react-router-dom";
 
 interface HomePageInterface {

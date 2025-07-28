@@ -5,6 +5,7 @@ import LoginForm from './components/features/Auth/LoginForm'
 import ErrorPage from './pages/ErrorPage'
 import HomePage from './pages/HomePage'
 import ProductList from './components/features/Products/ProductList'
+import { AuthProvider } from './context/AuthContext'
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,8 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <AuthProvider>
+      <RouterProvider router={router} />
+    </AuthProvider>
   </StrictMode>,
 )
