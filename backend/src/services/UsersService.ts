@@ -1,9 +1,9 @@
-import { PrismaClient } from "../generated/prisma";
+
 import { UsersCreateDto } from "../models/Users";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import prisma from "../lib/prisma";
 
-const prisma = new PrismaClient();
 
 interface ResponseInterface {
     response?: string;

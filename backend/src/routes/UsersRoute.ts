@@ -5,7 +5,7 @@ import { verifyJwt } from "../middleware/jwtUtil";
 const router = Router();
 
 router.post("/register", createUsersController);
-router.post("/signin", signInUserController);
+router.post("/login", signInUserController);
 //router.get("/current", verifyJwt, verifyJWTController);
 
 export default router;

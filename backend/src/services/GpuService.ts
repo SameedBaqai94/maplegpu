@@ -1,7 +1,7 @@
-import { PrismaClient } from "../generated/prisma";
+import prisma from "../lib/prisma";
 import { GpuReadDto, GpuWriteDto } from "../models/Gpu";
 
-const prisma = new PrismaClient();
+
 
 interface ResponseInterface {
     response?: string | GpuReadDto | GpuReadDto[] | boolean;
