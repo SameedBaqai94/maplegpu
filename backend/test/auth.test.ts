@@ -18,6 +18,9 @@ describe('Auth endpoints', () => {
             }
         });
     });
+    afterEach(async () => {
+        await prisma.users.deleteMany();
+    });
 
 
     describe("POST /api/users/login", () => {
@@ -31,7 +34,27 @@ describe('Auth endpoints', () => {
             expect(response.status).toBe(200);
         })
     })
-    afterEach(async () => {
-        await prisma.users.deleteMany();
-    });
+    describe("POST /api/users/login", () => {
+        it("shouldnt login with invalid credentials", async () => {
+            const response = await request(app)
+                .post("/api/users/login")
+                .send({
+                    email: "dawg@gmail.com",
+                    passwordHashed: "dawg1993"
+                });
+            expect(response.status).toBe(400);
+        })
+    })
+    describe("POST /api/users/register", () => {
+        it("shouldnt register with no username provided", async () => {
+            const response = await request(app)
+                .post("/api/users/register")
+                .send({
+                    email: "dawg@gmail.com",
+                    name: "",
+                    passwordHashed: "dawg1993"
+                });
+            expect(response.status).toBe(400);
+        })
+    })
 })

@@ -1,12 +1,13 @@
-import { useState } from 'react'
+import { Outlet } from 'react-router'
 import './App.css'
-import HomePage from './pages/HomePage'
+import Navbar from './components/layout/Navbar'
 
 function App() {
 
   return (
     <>
-     <HomePage/>
+      <Navbar />
+      <Outlet />
     </>
   )
 }
